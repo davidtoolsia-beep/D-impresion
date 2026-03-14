@@ -1,4 +1,38 @@
-<!DOCTYPE html>
+async function submitForm() {
+  // ... validaciones anteriores ...
+
+  const formData = {
+    'f-nombre':   document.getElementById('f-nombre').value.trim(),
+    'f-email':    document.getElementById('f-email').value.trim(),
+    'f-tel':      document.getElementById('f-tel').value.trim(),
+    'f-desc':     document.getElementById('f-desc').value.trim(),
+    'f-uso':      document.getElementById('f-uso').value,
+    'f-unidades': document.getElementById('f-unidades').value,
+    'f-diseno':   document.getElementById('f-diseno').value,
+    'f-plazo':    document.getElementById('f-plazo').value,
+    'f-extra':    document.getElementById('f-extra').value.trim(),
+  };
+
+  // 1. Enviar a Formspree
+  await fetch('https://formspree.io/f/xreylvre', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData)
+  });
+
+  // 2. Abrir WhatsApp con resumen
+  const waMsg = encodeURIComponent(
+    'Nueva solicitud\n\n' +
+    'Cliente: ' + formData['f-nombre'] + '\n' +
+    'Email: '   + formData['f-email']  + '\n' +
+    'Proyecto: ' + formData['f-desc']
+  );
+  window.open('https://wa.me/34XXXXXXXXX?text=' + waMsg, '_blank');
+
+  // 3. Mostrar pantalla de éxito
+  document.getElementById('form-content').style.display = 'none';
+  document.getElementById('success').style.display = 'block';
+}<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
