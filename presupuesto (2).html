@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solicitar presupuesto · D-Impresión</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple-deep: #1A0A3D;
+    --purple-dark: #2D1052;
+    --purple-mid: #5B23A8;
+    --orange: #EF891C;
+    --orange-light: #F5A84A;
+    --pink: #E74777;
+    --white: #FAFAF8;
+    --gray-mid: #C4B8D8;
+    --text-muted: #9B8DB0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--purple-deep);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    padding: 2rem 1.25rem 4rem;
+  }
+  .top {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 580px; margin: 0 auto 2rem;
+  }
+  .brand { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; letter-spacing: -0.02em; }
+  .brand span { color: var(--orange); }
+  .back-link { font-size: 0.85rem; color: var(--text-muted); text-decoration: none; transition: color .2s; }
+  .back-link:hover { color: var(--white); }
+
+  .card {
+    max-width: 580px; margin: 0 auto;
+    background: rgba(45,16,82,0.55);
+    border: 1px solid rgba(91,35,168,0.35);
+    border-radius: 20px; padding: 2rem;
+    backdrop-filter: blur(8px);
+  }
+
+  .card-header { margin-bottom: 1.75rem; }
+  .card-header h1 { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 0.5rem; }
+  .card-header p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+
+  .steps-indicator { display: flex; gap: 6px; margin-bottom: 1.75rem; }
+  .step-dot { flex: 1; height: 3px; border-radius: 2px; background: rgba(91,35,168,0.3); transition: background .3s; }
+  .step-dot.done { background: var(--orange); }
+  .step-dot.active { background: var(--orange-light); }
+
+  .step-panel { display: none; }
+  .step-panel.active { display: block; }
+
+  label { display: block; font-size: 0.78rem; font-weight: 500; color: var(--gray-mid); margin-bottom: 0.45rem; letter-spacing: 0.04em; text-transform: uppercase; }
+  input, select, textarea {
+    width: 100%;
+    background: rgba(26,10,61,0.8);
+    border: 1px solid rgba(91,35,168,0.4);
+    color: var(--white);
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color .2s;
+    margin-bottom: 1.1rem;
+    -webkit-appearance: none; appearance: none;
+  }
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239B8DB0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; cursor: pointer;
+  }
+  textarea { resize: vertical; min-height: 100px; }
+  input:focus, select:focus, textarea:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(239,137,28,0.12); }
+  input::placeholder, textarea::placeholder { color: rgba(155,141,176,0.45); }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .grid2 input, .grid2 select { margin-bottom: 0; }
+
+  .optional { font-size: 0.7rem; background: rgba(231,71,119,0.2); color: var(--pink); padding: 2px 7px; border-radius: 4px; margin-left: 6px; vertical-align: middle; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
+
+  #dropzone {
+    border: 1px dashed rgba(91,35,168,0.5); border-radius: 10px; padding: 1.25rem;
+    text-align: center; cursor: pointer; transition: border-color .2s; background: rgba(26,10,61,0.4);
+    margin-bottom: 1.1rem;
+  }
+  #dropzone:hover { border-color: var(--orange); }
+  #dropzone p { font-size: 0.83rem; color: var(--text-muted); line-height: 1.5; }
+
+  .btn-next {
+    width: 100%; background: var(--orange); color: var(--purple-deep);
+    padding: 0.9rem; border-radius: 10px; border: none; cursor: pointer;
+    font-weight: 700; font-family: 'Syne', sans-serif; font-size: 1rem;
+    transition: background .2s; letter-spacing: 0.01em;
+  }
+  .btn-next:hover { background: var(--orange-light); }
+  .btn-back {
+    width: 100%; background: transparent; color: var(--text-muted);
+    padding: 0.75rem; border-radius: 10px; border: 1px solid rgba(91,35,168,0.3);
+    cursor: pointer; font-size: 0.9rem; font-family: 'DM Sans', sans-serif;
+    transition: all .2s; margin-bottom: 0.75rem;
+  }
+  .btn-back:hover { color: var(--white); border-color: rgba(91,35,168,0.6); }
+
+  .error-box {
+    display: none; background: rgba(231,71,119,0.15);
+    border: 1px solid rgba(231,71,119,0.3); border-radius: 8px;
+    padding: 10px 14px; font-size: 0.83rem; color: #F9A8C0; margin-bottom: 1rem;
+  }
+
+  .success-box { text-align: center; padding: 2rem 1rem; display: none; }
+  .success-icon {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: rgba(29,158,117,0.2); border: 1px solid rgba(29,158,117,0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.75rem; margin: 0 auto 1.25rem;
+  }
+  .success-box h2 { font-family: 'Syne', sans-serif; font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .success-box p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+  .success-box .back-home { display: inline-block; margin-top: 1.5rem; color: var(--orange); font-size: 0.9rem; text-decoration: none; }
+  .trust-row {
+    display: flex; justify-content: center; gap: 1.5rem;
+    margin-top: 1.25rem; flex-wrap: wrap;
+  }
+  .trust-item { font-size: 0.78rem; color: var(--text-muted); display: flex; align-items: center; gap: 5px; }
+  .trust-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--orange); }
+
+  @media (max-width: 480px) {
+    .grid2 { grid-template-columns: 1fr; }
+    .card { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="brand">D-<span>Impresión</span></div>
+  <a href="dimpresion.html" class="back-link">← Volver a la web</a>
+</div>
+
+<div class="card">
+
+  <!-- SUCCESS -->
+  <div class="success-box" id="success">
+    <div class="success-icon">✓</div>
+    <h2>¡Solicitud enviada!</h2>
+    <p>Hemos recibido tu presupuesto. Te respondemos en menos de 4 horas con el precio detallado y sin compromiso.</p>
+    <a href="dimpresion.html" class="back-home">← Volver a D-Impresión</a>
+  </div>
+
+  <!-- FORM -->
+  <div id="form-content">
+    <div class="card-header">
+      <h1>Solicita tu presupuesto</h1>
+      <p>Sin tecnicismos. Cuéntanos qué necesitas y nosotros nos encargamos de todo.</p>
+    </div>
+
+    <div class="steps-indicator">
+      <div class="step-dot active" id="dot-1"></div>
+      <div class="step-dot" id="dot-2"></div>
+      <div class="step-dot" id="dot-3"></div>
+    </div>
+
+    <!-- STEP 1 · Proyecto -->
+    <div class="step-panel active" id="panel-1">
+      <label>¿Qué necesitas imprimir?</label>
+      <textarea id="f-desc" placeholder="Cuéntanoslo con tus palabras: 'necesito una pieza de repuesto para una fresadora', 'quiero un soporte personalizado', 'regalo con un nombre'..."></textarea>
+
+      <label>¿Para qué se va a usar?</label>
+      <select id="f-uso">
+        <option value="">Selecciona una opción</option>
+        <option>Pieza funcional o de repuesto industrial</option>
+        <option>Prototipo o maqueta</option>
+        <option>Decoración o regalo personalizado</option>
+        <option>Utillaje o herramienta</option>
+        <option>Otro / No estoy seguro</option>
+      </select>
+
+      <div class="grid2" style="margin-bottom:1.1rem">
+        <div>
+          <label>¿Cuántas unidades?</label>
+          <select id="f-unidades">
+            <option value="">Selecciona</option>
+            <option>1 unidad</option>
+            <option>2–5 unidades</option>
+            <option>6–20 unidades</option>
+            <option>Más de 20</option>
+            <option>No lo sé aún</option>
+          </select>
+        </div>
+        <div>
+          <label>¿Cuándo lo necesitas?</label>
+          <select id="f-plazo">
+            <option value="">Sin fecha límite</option>
+            <option>Urgente (24–48h)</option>
+            <option>Esta semana</option>
+            <option>Este mes</option>
+            <option>Sin prisa</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="error-box" id="err-1"></div>
+      <button class="btn-next" onclick="goStep(2)">Continuar →</button>
+    </div>
+
+    <!-- STEP 2 · Diseño -->
+    <div class="step-panel" id="panel-2">
+      <label>¿Tienes ya el diseño?</label>
+      <select id="f-diseno">
+        <option value="">Selecciona una opción</option>
+        <option>Sí, tengo el archivo STL o 3D listo para imprimir</option>
+        <option>Tengo medidas o un croquis pero no el archivo digital</option>
+        <option>Tengo una foto o referencia de lo que quiero</option>
+        <option>No tengo nada, necesito que lo diseñéis vosotros desde cero</option>
+      </select>
+
+      <label>Sube una imagen, foto o archivo <span class="optional">opcional</span></label>
+      <div id="dropzone" onclick="document.getElementById('f-archivo').click()"
+        ondragover="event.preventDefault();this.style.borderColor='var(--orange)'"
+        ondragleave="this.style.borderColor='rgba(91,35,168,0.5)'"
+        ondrop="handleDrop(event)">
+        <input type="file" id="f-archivo" accept="image/*,.stl,.obj,.step,.stp" style="display:none" onchange="showFile(this)">
+        <p id="drop-label">Arrastra aquí tu imagen o archivo<br><span style="font-size:0.75rem;opacity:0.6">JPG, PNG, STL, OBJ, STEP · máx. 10 MB</span></p>
+      </div>
+
+      <label>Información adicional <span class="optional">opcional</span></label>
+      <input type="text" id="f-extra" placeholder="Medidas aproximadas, color preferido, material si lo sabes...">
+
+      <div class="error-box" id="err-2"></div>
+      <button class="btn-back" onclick="goStep(1)">← Volver</button>
+      <button class="btn-next" onclick="goStep(3)">Continuar →</button>
+    </div>
+
+    <!-- STEP 3 · Contacto -->
+    <div class="step-panel" id="panel-3">
+      <div class="grid2" style="margin-bottom:1.1rem">
+        <div>
+          <label>Nombre</label>
+          <input type="text" id="f-nombre" placeholder="Tu nombre" style="margin:0">
+        </div>
+        <div>
+          <label>WhatsApp <span class="optional">opcional</span></label>
+          <input type="tel" id="f-tel" placeholder="600 000 000" style="margin:0">
+        </div>
+      </div>
+
+      <label>Email</label>
+      <input type="email" id="f-email" placeholder="tu@email.com">
+
+      <p style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;margin-bottom:1.25rem;">
+        Tus datos se usan únicamente para enviarte el presupuesto. No los compartimos con nadie ni los usamos para publicidad.
+      </p>
+
+      <div class="error-box" id="err-3"></div>
+      <button class="btn-back" onclick="goStep(2)">← Volver</button>
+      <button class="btn-next" onclick="submitForm()">Enviar solicitud →</button>
+
+      <div class="trust-row">
+        <div class="trust-item"><div class="trust-dot"></div>Respuesta en &lt;4h</div>
+        <div class="trust-item"><div class="trust-dot"></div>Sin compromiso</div>
+        <div class="trust-item"><div class="trust-dot"></div>Cáceres · Las Capellanías</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentStep = 1;
+
+function goStep(n) {
+  const errId = 'err-' + currentStep;
+  document.getElementById(errId).style.display = 'none';
+
+  if (n > currentStep) {
+    if (currentStep === 1) {
+      const desc = document.getElementById('f-desc').value.trim();
+      const uso  = document.getElementById('f-uso').value;
+      if (!desc) { showErr('err-1', 'Cuéntanos qué necesitas imprimir.'); return; }
+      if (!uso)  { showErr('err-1', 'Selecciona para qué se va a usar.'); return; }
+    }
+    if (currentStep === 3) { submitForm(); return; }
+  }
+
+  document.getElementById('panel-' + currentStep).classList.remove('active');
+  for (let i = 1; i <= 3; i++) {
+    const dot = document.getElementById('dot-' + i);
+    if (i < n) { dot.className = 'step-dot done'; }
+    else if (i === n) { dot.className = 'step-dot active'; }
+    else { dot.className = 'step-dot'; }
+  }
+  currentStep = n;
+  document.getElementById('panel-' + currentStep).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showErr(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function showFile(input) {
+  if (input.files && input.files[0]) {
+    document.getElementById('drop-label').innerHTML = '✓ ' + input.files[0].name + '<br><span style="font-size:0.75rem;opacity:0.6">Haz clic para cambiar</span>';
+    document.getElementById('dropzone').style.borderColor = 'var(--orange)';
+  }
+}
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('dropzone').style.borderColor = 'rgba(91,35,168,0.5)';
+  const f = e.dataTransfer.files[0];
+  if (f) { document.getElementById('f-archivo').files = e.dataTransfer.files; showFile({files:[f]}); }
+}
+
+async function submitForm() {
+  const nombre = document.getElementById('f-nombre').value.trim();
+  const email  = document.getElementById('f-email').value.trim();
+  if (!nombre) { showErr('err-3', 'Escribe tu nombre.'); return; }
+  if (!email || !email.includes('@')) { showErr('err-3', 'Introduce un email válido.'); return; }
+
+  const btn = document.querySelector('#panel-3 .btn-next');
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
+
+  const formData = {
+    nombre:   nombre,
+    email:    email,
+    telefono: document.getElementById('f-tel').value.trim(),
+    proyecto: document.getElementById('f-desc').value.trim(),
+    uso:      document.getElementById('f-uso').value,
+    unidades: document.getElementById('f-unidades').value,
+    diseno:   document.getElementById('f-diseno').value,
+    plazo:    document.getElementById('f-plazo').value,
+    notas:    document.getElementById('f-extra').value.trim(),
+  };
+
+  try {
+    const res = await fetch('https://formspree.io/f/xreylvre', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+    if (!res.ok) throw new Error();
+  } catch(e) {
+    showErr('err-3', 'Error al enviar. Prueba de nuevo o escríbenos directamente.');
+    btn.textContent = 'Enviar solicitud →';
+    btn.disabled = false;
+    return;
+  }
+
+  document.getElementById('form-content').style.display = 'none';
+  document.getElementById('success').style.display = 'block';
+}
+</script>
+</body>
+</html>
