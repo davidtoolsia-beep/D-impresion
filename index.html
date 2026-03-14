@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D-Impresión · Impresión 3D Profesional en Cáceres</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple-deep: #1A0A3D;
+    --purple-dark: #2D1052;
+    --purple-mid: #5B23A8;
+    --purple-light: #8B5CF6;
+    --orange: #EF891C;
+    --orange-light: #F5A84A;
+    --pink: #E74777;
+    --white: #FAFAF8;
+    --gray-light: #F0EBF8;
+    --gray-mid: #C4B8D8;
+    --text-muted: #9B8DB0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--purple-deep);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .brand { font-family: 'Syne', sans-serif; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    background: rgba(26, 10, 61, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(91, 35, 168, 0.25);
+  }
+  .brand { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; }
+  .brand span { color: var(--orange); }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links a { color: var(--gray-mid); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    background: var(--orange); color: var(--purple-deep) !important;
+    padding: 0.5rem 1.25rem; border-radius: 6px;
+    font-weight: 600; font-size: 0.85rem !important;
+    transition: background 0.2s, transform 0.15s !important;
+  }
+  .nav-cta:hover { background: var(--orange-light) !important; transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 8rem 2.5rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 40%, rgba(91,35,168,0.35) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 70%, rgba(231,71,119,0.15) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; pointer-events: none; opacity: 0.06;
+    background-image: linear-gradient(rgba(239,137,28,0.8) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(239,137,28,0.8) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at 60% 40%, black 20%, transparent 70%);
+  }
+  .hero-content { position: relative; max-width: 700px; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(239,137,28,0.15);
+    border: 1px solid rgba(239,137,28,0.35);
+    color: var(--orange-light); font-size: 0.8rem; font-weight: 500;
+    padding: 0.4rem 1rem; border-radius: 100px; margin-bottom: 1.75rem;
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--orange); display: block; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  h1 {
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 800; line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  h1 em { font-style: normal; color: var(--orange); }
+  h1 .pink { color: var(--pink); }
+
+  .hero-desc {
+    font-size: 1.1rem; color: var(--gray-mid);
+    max-width: 520px; margin-bottom: 2.5rem; line-height: 1.7;
+  }
+
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--orange); color: var(--purple-deep);
+    padding: 0.85rem 2rem; border-radius: 8px;
+    font-weight: 700; font-family: 'Syne', sans-serif;
+    font-size: 0.95rem; text-decoration: none;
+    transition: all 0.2s; display: inline-block;
+    letter-spacing: 0.01em;
+  }
+  .btn-primary:hover { background: var(--orange-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(239,137,28,0.3); }
+  .btn-ghost {
+    background: transparent; color: var(--white);
+    padding: 0.85rem 2rem; border-radius: 8px;
+    font-weight: 500; font-size: 0.95rem; text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.2s; display: inline-block;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.05); }
+
+  /* STATS */
+  .stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    padding-top: 2.5rem; border-top: 1px solid rgba(91,35,168,0.3);
+    flex-wrap: wrap;
+  }
+  .stat-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--white); }
+  .stat-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+
+  /* SERVICES */
+  .section { padding: 6rem 2.5rem; max-width: 1200px; margin: 0 auto; }
+  .section-tag {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--orange);
+    margin-bottom: 1rem; display: block;
+  }
+  h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800; letter-spacing: -0.025em; line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  .section-sub { color: var(--text-muted); font-size: 1.05rem; max-width: 520px; margin-bottom: 3.5rem; }
+
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5px; background: rgba(91,35,168,0.2); border-radius: 16px; overflow: hidden; }
+  .service-card {
+    background: rgba(26,10,61,0.9);
+    padding: 2rem;
+    transition: background 0.25s;
+    position: relative; overflow: hidden;
+  }
+  .service-card:hover { background: rgba(45,16,82,0.95); }
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--orange), var(--pink));
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .service-card:hover::before { opacity: 1; }
+  .service-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: rgba(239,137,28,0.12); border: 1px solid rgba(239,137,28,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; margin-bottom: 1.25rem;
+  }
+  .service-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; font-family: 'Syne', sans-serif; }
+  .service-card p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
+  .service-price { margin-top: 1rem; font-size: 0.85rem; color: var(--orange); font-weight: 600; }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(91,35,168,0.4), transparent); max-width: 1200px; margin: 0 auto; }
+
+  /* CALCULATOR */
+  .calc-section {
+    padding: 6rem 2.5rem;
+    background: linear-gradient(180deg, rgba(91,35,168,0.08) 0%, transparent 100%);
+  }
+  .calc-inner { max-width: 1100px; margin: 0 auto; }
+  .calc-layout { display: grid; grid-template-columns: 1fr 420px; gap: 4rem; align-items: start; }
+
+  .calc-box {
+    background: rgba(45,16,82,0.5);
+    border: 1px solid rgba(91,35,168,0.35);
+    border-radius: 20px;
+    padding: 2.5rem;
+    backdrop-filter: blur(8px);
+  }
+
+  .calc-box h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 2rem; font-family: 'Syne', sans-serif; color: var(--white); }
+
+  .field { margin-bottom: 1.5rem; }
+  .field label { display: block; font-size: 0.8rem; font-weight: 500; color: var(--gray-mid); margin-bottom: 0.5rem; letter-spacing: 0.04em; text-transform: uppercase; }
+
+  .field select, .field input[type="number"] {
+    width: 100%;
+    background: rgba(26,10,61,0.8);
+    border: 1px solid rgba(91,35,168,0.4);
+    color: var(--white);
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .field select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239B8DB0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; cursor: pointer; }
+  .field select:focus, .field input:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(239,137,28,0.15); }
+  .field input::placeholder { color: rgba(155,141,176,0.5); }
+
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .field-row .field { margin-bottom: 0; }
+
+  .optional-tag { font-size: 0.7rem; background: rgba(231,71,119,0.2); color: var(--pink); padding: 2px 7px; border-radius: 4px; margin-left: 6px; }
+
+  .calc-sep { height: 1px; background: rgba(91,35,168,0.3); margin: 1.75rem 0; }
+
+  .result-box {
+    background: rgba(239,137,28,0.08);
+    border: 1px solid rgba(239,137,28,0.25);
+    border-radius: 14px; padding: 1.75rem; margin-top: 1.5rem;
+  }
+  .result-label { font-size: 0.75rem; color: var(--orange); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .result-price { font-family: 'Syne', sans-serif; font-size: 3.5rem; font-weight: 800; color: var(--white); line-height: 1; }
+  .result-price span { font-size: 1.5rem; opacity: 0.6; margin-left: 4px; }
+  .result-note { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem; }
+
+  .breakdown { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid rgba(239,137,28,0.15); }
+  .breakdown-row { display: flex; justify-content: space-between; font-size: 0.83rem; margin-bottom: 6px; }
+  .breakdown-row span:first-child { color: var(--text-muted); }
+  .breakdown-row span:last-child { color: var(--gray-mid); font-weight: 500; }
+  .breakdown-total { display: flex; justify-content: space-between; font-size: 0.9rem; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(91,35,168,0.3); }
+  .breakdown-total span { font-weight: 700; color: var(--orange); }
+
+  .calc-info { }
+  .calc-info h2 { margin-bottom: 1rem; }
+  .info-card {
+    background: rgba(45,16,82,0.4);
+    border: 1px solid rgba(91,35,168,0.25);
+    border-radius: 14px; padding: 1.5rem; margin-bottom: 1rem;
+  }
+  .info-card h4 { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .info-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+  .info-card .tag { display: inline-block; font-size: 0.75rem; padding: 3px 10px; border-radius: 5px; margin-bottom: 0.75rem; font-weight: 600; }
+  .tag-b2c { background: rgba(139,92,246,0.2); color: #C4B8FF; }
+  .tag-b2b { background: rgba(239,137,28,0.15); color: var(--orange-light); }
+  .tag-ing { background: rgba(231,71,119,0.15); color: #F9A8C0; }
+
+  .whatsapp-btn {
+    display: flex; align-items: center; gap: 10px;
+    background: #25D366; color: #fff;
+    padding: 1rem 1.5rem; border-radius: 12px;
+    font-weight: 700; font-family: 'Syne', sans-serif;
+    font-size: 0.95rem; text-decoration: none;
+    transition: all 0.2s; margin-top: 1.5rem;
+    justify-content: center;
+  }
+  .whatsapp-btn:hover { background: #1ebe5d; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.3); }
+  .whatsapp-btn svg { flex-shrink: 0; }
+
+  /* MATERIALS TABLE */
+  .materials-section { padding: 3rem 2.5rem 6rem; max-width: 1200px; margin: 0 auto; }
+  table { width: 100%; border-collapse: collapse; margin-top: 2rem; }
+  thead th {
+    text-align: left; font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text-muted); padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(91,35,168,0.3);
+  }
+  tbody tr { border-bottom: 1px solid rgba(91,35,168,0.15); transition: background 0.15s; }
+  tbody tr:hover { background: rgba(91,35,168,0.08); }
+  tbody td { padding: 0.9rem 1rem; font-size: 0.9rem; color: var(--gray-mid); }
+  tbody td:first-child { color: var(--white); font-weight: 500; }
+  .mat-tag { font-size: 0.72rem; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+  .mat-basic { background: rgba(91,35,168,0.25); color: #C4B8FF; }
+  .mat-tech { background: rgba(239,137,28,0.2); color: var(--orange-light); }
+  .mat-prem { background: rgba(231,71,119,0.2); color: #F9A8C0; }
+
+  /* CONTACT */
+  .contact-section {
+    background: linear-gradient(135deg, var(--purple-dark) 0%, rgba(91,35,168,0.3) 100%);
+    border-top: 1px solid rgba(91,35,168,0.3);
+    padding: 5rem 2.5rem; text-align: center;
+  }
+  .contact-inner { max-width: 600px; margin: 0 auto; }
+  .contact-inner p { color: var(--text-muted); margin: 1rem 0 2.5rem; font-size: 1.05rem; }
+  .contact-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  footer {
+    background: rgba(10,4,25,0.8);
+    border-top: 1px solid rgba(91,35,168,0.2);
+    padding: 2rem 2.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  footer p { font-size: 0.8rem; color: var(--text-muted); }
+  footer a { color: var(--text-muted); text-decoration: none; }
+  footer a:hover { color: var(--orange); }
+
+  @media (max-width: 900px) {
+    .calc-layout { grid-template-columns: 1fr; }
+    .calc-info { order: -1; }
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { gap: 1rem; }
+    .hero { padding: 7rem 1.25rem 4rem; }
+    .section, .materials-section { padding: 4rem 1.25rem; }
+    .calc-section { padding: 4rem 1.25rem; }
+    .stats { gap: 1.5rem; }
+    footer { flex-direction: column; text-align: center; }
+  }
+  @media (max-width: 600px) {
+    .nav-links a:not(.nav-cta):not(:last-child) { display: none; }
+    h1 { font-size: 2.4rem; }
+    .field-row { grid-template-columns: 1fr; }
+    .contact-actions { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="brand">D-<span>Impresión</span></div>
+  <div class="nav-links">
+    <a href="#servicios">Servicios</a>
+    <a href="#calculadora">Calculadora</a>
+    <a href="#materiales">Materiales</a>
+    <a href="#contacto" class="nav-cta">Solicitar presupuesto</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Cáceres · Las Capellanías</div>
+    <h1>Impresión 3D<br><em>profesional</em><br>en <span class="pink">Extremadura</span></h1>
+    <p class="hero-desc">
+      Piezas técnicas en PA-CF, ASA y PC para industria. Prototipos y personalización para particulares. Simulación estructural con Altair Inspire. Respuesta en &lt;4h.
+    </p>
+    <div class="hero-actions">
+      <a href="#calculadora" class="btn-primary">Calcular precio online</a>
+      <a href="#contacto" class="btn-ghost">Contactar</a>
+    </div>
+    <div class="stats">
+      <div>
+        <div class="stat-num">3–4</div>
+        <div class="stat-label">años de experiencia</div>
+      </div>
+      <div>
+        <div class="stat-num">&lt;4h</div>
+        <div class="stat-label">tiempo de respuesta</div>
+      </div>
+      <div>
+        <div class="stat-num">PA-CF</div>
+        <div class="stat-label">materiales técnicos únicos en Cáceres</div>
+      </div>
+      <div>
+        <div class="stat-num">Altair</div>
+        <div class="stat-label">simulación estructural</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="servicios">
+  <span class="section-tag">Servicios</span>
+  <h2>Todo lo que necesitas<br>en un solo sitio</h2>
+  <p class="section-sub">Desde piezas de repuesto industriales hasta regalos personalizados. B2B y B2C con los mismos estándares de calidad.</p>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">⚙️</div>
+      <h3>FDM Industrial</h3>
+      <p>PA-CF, ASA, PC y PETG para piezas técnicas con tolerancias de ±0,3 mm. Ideal para utillaje, repuestos y prototipos funcionales.</p>
+      <div class="service-price">Desde 6,00 €/h máquina</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🖨️</div>
+      <h3>FDM Estándar</h3>
+      <p>PLA, PETG y TPU para piezas decorativas, prototipos visuales y personalización. Alta velocidad de producción con la Bambu Lab A1.</p>
+      <div class="service-price">Desde 3,50 €/h máquina</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💎</div>
+      <h3>Resina MSLA</h3>
+      <p>Piezas con acabado superficial premium y tolerancias de ±0,1 mm. Ideal para joyería, dental, miniaturas y piezas de alta precisión.</p>
+      <div class="service-price">Desde 9,00 €/h máquina</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📐</div>
+      <h3>Diseño CAD</h3>
+      <p>Modelado 3D desde cero o a partir de croquis. Ingeniería inversa y adaptación de piezas existentes para impresión 3D óptima.</p>
+      <div class="service-price">35 €/h</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🔬</div>
+      <h3>Simulación Altair</h3>
+      <p>Análisis estructural con Altair Inspire antes de imprimir. El único servicio de este tipo disponible en Cáceres. Reduce fallos y materiales.</p>
+      <div class="service-price">50 €/h · Informe desde 80 €</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📦</div>
+      <h3>Pack Urgencia Industrial</h3>
+      <p>Para averías en producción en Las Capellanías. Respuesta inmediata, pieza impresa en el día. Todo incluido sin sorpresas.</p>
+      <div class="service-price">120 € todo incluido</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CALCULATOR -->
+<section class="calc-section" id="calculadora">
+  <div class="calc-inner">
+    <div class="calc-layout">
+
+      <!-- INFO -->
+      <div class="calc-info">
+        <span class="section-tag">Calculadora</span>
+        <h2>Sabe el precio<br>antes de pedir</h2>
+        <p class="section-sub">Sin formularios, sin esperas. Configura tu pieza y obtén el precio al instante.</p>
+
+        <div class="info-card">
+          <span class="tag tag-b2c">B2C · Particulares</span>
+          <h4>Personalización y prototipos</h4>
+          <p>Llaveros, figuras, piezas de hogar, prototipos creativos. PLA y PETG a precios accesibles con entrega rápida.</p>
+        </div>
+        <div class="info-card">
+          <span class="tag tag-b2b">B2B · Empresas</span>
+          <h4>Piezas técnicas para industria</h4>
+          <p>PA-CF y ASA para utillaje y repuestos en Las Capellanías y toda Extremadura. Hoja de conformidad incluida.</p>
+        </div>
+        <div class="info-card">
+          <span class="tag tag-ing">Ingeniería</span>
+          <h4>Diseño + simulación + impresión</h4>
+          <p>Servicio completo: diseñamos, analizamos estructuralmente con Altair e imprimimos. Garantía de resultado.</p>
+        </div>
+      </div>
+
+      <!-- CALCULATOR BOX -->
+      <div class="calc-box">
+        <h3>Calcula tu presupuesto</h3>
+
+        <div class="field">
+          <label>Material</label>
+          <select id="material" onchange="calcPrice()">
+            <option value="pla">PLA — estándar visual</option>
+            <option value="petg">PETG — resistente al impacto</option>
+            <option value="tpu">TPU — flexible</option>
+            <option value="asa">ASA — exterior / UV</option>
+            <option value="pa-cf">PA-CF (Nylon Carbono) — industrial</option>
+            <option value="pc">PC — alta temperatura</option>
+            <option value="resina">Resina MSLA — alta precisión</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Peso estimado (g)</label>
+            <input type="number" id="grams" min="1" max="5000" value="50" placeholder="50" onchange="calcPrice()" oninput="calcPrice()">
+          </div>
+          <div class="field">
+            <label>Tiempo de impresión (h)</label>
+            <input type="number" id="hours" min="0.5" max="200" value="3" step="0.5" placeholder="3" onchange="calcPrice()" oninput="calcPrice()">
+          </div>
+        </div>
+
+        <div class="calc-sep"></div>
+
+        <div class="field">
+          <label>Diseño CAD <span class="optional-tag">opcional</span></label>
+          <input type="number" id="cad-hours" min="0" max="100" value="0" step="0.5" placeholder="0 horas" onchange="calcPrice()" oninput="calcPrice()">
+        </div>
+
+        <div class="field">
+          <label>Simulación Altair <span class="optional-tag">opcional</span></label>
+          <select id="altair" onchange="calcPrice()">
+            <option value="0">No necesaria</option>
+            <option value="1">Consultoría básica (1h — 50 €)</option>
+            <option value="2">Informe estructural completo (80 €)</option>
+          </select>
+        </div>
+
+        <!-- RESULT -->
+        <div class="result-box">
+          <div class="result-label">Precio estimado + IVA</div>
+          <div class="result-price" id="total-price">—<span>€</span></div>
+          <div class="result-note" id="result-note">Configura tu pieza para ver el precio</div>
+
+          <div class="breakdown" id="breakdown" style="display:none">
+            <div class="breakdown-row" id="br-material"><span>Material</span><span></span></div>
+            <div class="breakdown-row" id="br-machine"><span>Tiempo de máquina</span><span></span></div>
+            <div class="breakdown-row" id="br-setup"><span>Setup obligatorio</span><span>15,00 €</span></div>
+            <div class="breakdown-row" id="br-cad" style="display:none"><span>Diseño CAD</span><span></span></div>
+            <div class="breakdown-row" id="br-altair" style="display:none"><span>Simulación Altair</span><span></span></div>
+            <div class="breakdown-total"><span>Total (sin IVA)</span><span id="total-neto">—</span></div>
+          </div>
+        </div>
+
+        <a href="#contacto" class="whatsapp-btn" id="wa-btn" style="display:none">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.025.507 3.934 1.395 5.61L0 24l6.545-1.369A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.028-1.382l-.36-.214-3.733.781.794-3.636-.235-.374A9.786 9.786 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182c5.42 0 9.818 4.398 9.818 9.818 0 5.42-4.398 9.818-9.818 9.818z"/></svg>
+          Solicitar este presupuesto por WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MATERIALS TABLE -->
+<section class="materials-section" id="materiales">
+  <span class="section-tag">Materiales</span>
+  <h2>¿Qué material necesitas?</h2>
+  <p class="section-sub">Guía rápida para elegir el material correcto según tu aplicación.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Material</th>
+        <th>Tipo</th>
+        <th>Resistencia</th>
+        <th>Temperatura máx.</th>
+        <th>Ideal para</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>PLA</td>
+        <td><span class="mat-tag mat-basic">Estándar</span></td>
+        <td>Media</td>
+        <td>55 °C</td>
+        <td>Prototipos visuales, decoración, maquetas</td>
+      </tr>
+      <tr>
+        <td>PETG</td>
+        <td><span class="mat-tag mat-basic">Estándar</span></td>
+        <td>Media-alta</td>
+        <td>75 °C</td>
+        <td>Piezas funcionales, alimentario, transparencias</td>
+      </tr>
+      <tr>
+        <td>TPU</td>
+        <td><span class="mat-tag mat-basic">Estándar</span></td>
+        <td>Alta (flexible)</td>
+        <td>60 °C</td>
+        <td>Juntas, fundas, amortiguadores, gripper</td>
+      </tr>
+      <tr>
+        <td>ASA</td>
+        <td><span class="mat-tag mat-tech">Técnico</span></td>
+        <td>Alta + UV</td>
+        <td>95 °C</td>
+        <td>Exterior, automoción, piezas a la intemperie</td>
+      </tr>
+      <tr>
+        <td>PA-CF (Nylon Carbono)</td>
+        <td><span class="mat-tag mat-tech">Técnico</span></td>
+        <td>Muy alta</td>
+        <td>120 °C</td>
+        <td>Utillaje industrial, repuestos, piezas estructurales</td>
+      </tr>
+      <tr>
+        <td>PC (Policarbonato)</td>
+        <td><span class="mat-tag mat-tech">Técnico</span></td>
+        <td>Muy alta</td>
+        <td>135 °C</td>
+        <td>Alta temperatura, impacto severo, óptica</td>
+      </tr>
+      <tr>
+        <td>Resina MSLA</td>
+        <td><span class="mat-tag mat-prem">Premium</span></td>
+        <td>Alta precisión</td>
+        <td>Varía</td>
+        <td>Dental, joyería, miniaturas, ingeniería de precisión</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- CONTACT FORM -->
+<section class="contact-section" id="contacto">
+  <div style="max-width:680px; margin:0 auto;">
+    <span class="section-tag" style="display:block;text-align:center;">Solicitar presupuesto</span>
+    <h2 style="text-align:center;">¿Tienes un proyecto?</h2>
+    <p style="text-align:center;color:var(--text-muted);margin:0.75rem 0 2.5rem;font-size:1.05rem;">Cuéntanos qué necesitas en tu idioma. Sin tecnicismos. Te respondemos en menos de 4 horas.</p>
+
+    <div id="form-wrap" style="background:rgba(45,16,82,0.5);border:1px solid rgba(91,35,168,0.35);border-radius:20px;padding:2.5rem;backdrop-filter:blur(8px);">
+
+      <div id="form-success" style="display:none;text-align:center;padding:2rem 0;">
+        <div style="font-size:2.5rem;margin-bottom:1rem;">✓</div>
+        <h3 style="font-family:'Syne',sans-serif;font-size:1.4rem;margin-bottom:0.75rem;">¡Solicitud recibida!</h3>
+        <p style="color:var(--text-muted);font-size:0.95rem;">Te responderemos en menos de 4 horas con el presupuesto detallado. Revisa también tu bandeja de spam.</p>
+      </div>
+
+      <div id="form-fields">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem;">
+          <div class="field" style="margin:0">
+            <label>Nombre</label>
+            <input type="text" id="f-nombre" placeholder="Tu nombre" required>
+          </div>
+          <div class="field" style="margin:0">
+            <label>WhatsApp / Teléfono</label>
+            <input type="tel" id="f-telefono" placeholder="600 000 000">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Email</label>
+          <input type="email" id="f-email" placeholder="tu@email.com" required>
+        </div>
+
+        <div class="field">
+          <label>¿Qué necesitas imprimir?</label>
+          <textarea id="f-descripcion" rows="3" placeholder="Descríbelo con tus palabras: 'necesito una pieza de repuesto para una máquina', 'quiero un soporte para poner en la pared', 'regalo personalizado con un nombre'..." style="width:100%;background:rgba(26,10,61,0.8);border:1px solid rgba(91,35,168,0.4);color:var(--white);padding:0.75rem 1rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.95rem;outline:none;resize:vertical;transition:border-color .2s;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='rgba(91,35,168,0.4)'"></textarea>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem;">
+          <div class="field" style="margin:0">
+            <label>¿Para qué se va a usar?</label>
+            <select id="f-uso">
+              <option value="">Selecciona una opción</option>
+              <option>Pieza funcional o de repuesto</option>
+              <option>Decoración o regalo</option>
+              <option>Prototipo o maqueta</option>
+              <option>Utillaje industrial</option>
+              <option>Otro / No estoy seguro</option>
+            </select>
+          </div>
+          <div class="field" style="margin:0">
+            <label>¿Cuántas unidades?</label>
+            <select id="f-unidades">
+              <option value="">Selecciona</option>
+              <option>1 unidad</option>
+              <option>2–5 unidades</option>
+              <option>6–20 unidades</option>
+              <option>Más de 20</option>
+              <option>No lo sé aún</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>¿Tienes ya el diseño?</label>
+          <select id="f-diseno">
+            <option value="">Selecciona una opción</option>
+            <option>Sí, tengo el archivo STL o 3D listo</option>
+            <option>Tengo un croquis o medidas pero no el archivo</option>
+            <option>Tengo una foto o referencia de lo que quiero</option>
+            <option>No tengo nada, necesito que lo diseñéis vosotros</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>¿Cuándo lo necesitas? <span class="optional-tag">opcional</span></label>
+          <select id="f-plazo">
+            <option value="">Sin fecha límite</option>
+            <option>Urgente (en 24–48h)</option>
+            <option>Esta semana</option>
+            <option>Este mes</option>
+            <option>Sin prisa</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Imagen, foto o referencia <span class="optional-tag">opcional</span></label>
+          <div id="dropzone" style="border:1px dashed rgba(91,35,168,0.5);border-radius:10px;padding:1.25rem;text-align:center;cursor:pointer;transition:border-color .2s;background:rgba(26,10,61,0.4);" onclick="document.getElementById('f-archivo').click()" ondragover="event.preventDefault();this.style.borderColor='var(--orange)'" ondragleave="this.style.borderColor='rgba(91,35,168,0.5)'" ondrop="handleDrop(event)">
+            <input type="file" id="f-archivo" accept="image/*,.stl,.obj,.step,.stp" style="display:none" onchange="showFile(this)">
+            <p id="drop-label" style="font-size:0.85rem;color:var(--text-muted);margin:0;">Arrastra aquí una imagen o archivo · o haz clic para seleccionar<br><span style="font-size:0.75rem;opacity:0.6;">JPG, PNG, STL, OBJ, STEP — máx. 10 MB</span></p>
+          </div>
+        </div>
+
+        <div id="form-error" style="display:none;background:rgba(231,71,119,0.15);border:1px solid rgba(231,71,119,0.3);border-radius:8px;padding:10px 14px;font-size:0.85rem;color:#F9A8C0;margin-bottom:1rem;"></div>
+
+        <button onclick="submitForm()" style="width:100%;background:var(--orange);color:var(--purple-deep);padding:1rem;border-radius:10px;font-weight:700;font-family:'Syne',sans-serif;font-size:1rem;border:none;cursor:pointer;transition:all .2s;letter-spacing:0.01em;" onmouseover="this.style.background='var(--orange-light)'" onmouseout="this.style.background='var(--orange)'">
+          Enviar solicitud de presupuesto →
+        </button>
+        <p style="text-align:center;font-size:0.78rem;color:var(--text-muted);margin-top:0.75rem;">Respuesta garantizada en menos de 4 horas · Sin compromiso</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="brand" style="font-size:1rem;">D-<span>Impresión</span></div>
+  <p>Polígono Industrial Las Capellanías · Cáceres, Extremadura</p>
+  <p><a href="mailto:info@dimpresion.es">info@dimpresion.es</a> · División industrial: D-Tech Additive</p>
+</footer>
+
+<script>
+const materials = {
+  'pla':    { name: 'PLA',              gramo: 0.030, maquina: 3.50, tier: 'Estándar' },
+  'petg':   { name: 'PETG',             gramo: 0.035, maquina: 3.50, tier: 'Estándar' },
+  'tpu':    { name: 'TPU',              gramo: 0.050, maquina: 3.50, tier: 'Estándar' },
+  'asa':    { name: 'ASA',              gramo: 0.060, maquina: 6.00, tier: 'Técnico' },
+  'pa-cf':  { name: 'PA-CF',            gramo: 0.120, maquina: 6.00, tier: 'Técnico' },
+  'pc':     { name: 'PC',               gramo: 0.100, maquina: 6.00, tier: 'Técnico' },
+  'resina': { name: 'Resina MSLA',      gramo: 0.080, maquina: 9.00, tier: 'Premium' },
+};
+
+function fmt(n) { return n.toFixed(2).replace('.', ',') + ' €'; }
+
+function calcPrice() {
+  const matKey = document.getElementById('material').value;
+  const mat = materials[matKey];
+  const grams = parseFloat(document.getElementById('grams').value) || 0;
+  const hours = parseFloat(document.getElementById('hours').value) || 0;
+  const cadH  = parseFloat(document.getElementById('cad-hours').value) || 0;
+  const altair = parseInt(document.getElementById('altair').value) || 0;
+
+  if (grams <= 0 || hours <= 0) return;
+
+  const costoMaterial = grams * mat.gramo;
+  const costoMaquina  = hours * mat.maquina;
+  const setup         = 15;
+  const costoCAD      = cadH * 35;
+  const costoAltair   = altair === 1 ? 50 : altair === 2 ? 80 : 0;
+
+  let subtotal = costoMaterial + costoMaquina + setup + costoCAD + costoAltair;
+  const minimo = 30;
+  if (subtotal < minimo) subtotal = minimo;
+
+  const conIva = subtotal * 1.21;
+
+  document.getElementById('total-price').innerHTML = conIva.toFixed(2).replace('.', ',') + '<span> €</span>';
+  document.getElementById('result-note').textContent = 'Precio orientativo con IVA incluido · Mínimo 30 € sin IVA';
+  document.getElementById('breakdown').style.display = 'block';
+  document.getElementById('wa-btn').style.display = 'flex';
+
+  document.getElementById('br-material').querySelector('span:last-child').textContent = fmt(costoMaterial) + ' (' + grams + 'g × ' + (mat.gramo * 1000 | 0) + ' ct/g)';
+  document.getElementById('br-machine').querySelector('span:last-child').textContent = fmt(costoMaquina) + ' (' + hours + 'h × ' + mat.maquina.toFixed(2).replace('.', ',') + ' €/h ' + mat.tier + ')';
+
+  const brCad = document.getElementById('br-cad');
+  if (cadH > 0) {
+    brCad.style.display = 'flex';
+    brCad.querySelector('span:last-child').textContent = fmt(costoCAD) + ' (' + cadH + 'h × 35,00 €/h)';
+  } else { brCad.style.display = 'none'; }
+
+  const brAlt = document.getElementById('br-altair');
+  if (costoAltair > 0) {
+    brAlt.style.display = 'flex';
+    brAlt.querySelector('span:last-child').textContent = fmt(costoAltair);
+  } else { brAlt.style.display = 'none'; }
+
+  document.getElementById('total-neto').textContent = fmt(subtotal);
+
+  const waMsg = encodeURIComponent('Hola, me interesa una pieza con esta configuración:\n\n• Material: ' + mat.name + '\n• Peso: ' + grams + 'g\n• Tiempo: ' + hours + 'h\n' + (cadH > 0 ? '• Diseño CAD: ' + cadH + 'h\n' : '') + '\nPrecio estimado: ' + conIva.toFixed(2) + ' € (IVA inc.)\n\n¿Podéis confirmar?');
+  document.getElementById('wa-btn').href = 'https://wa.me/34XXXXXXXXX?text=' + waMsg;
+}
+
+calcPrice();
+
+function showFile(input) {
+  if (input.files && input.files[0]) {
+    document.getElementById('drop-label').innerHTML = '✓ ' + input.files[0].name + '<br><span style="font-size:0.75rem;opacity:0.6;">Haz clic para cambiar</span>';
+    document.getElementById('dropzone').style.borderColor = 'var(--orange)';
+  }
+}
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('dropzone').style.borderColor = 'rgba(91,35,168,0.5)';
+  const file = e.dataTransfer.files[0];
+  if (file) {
+    document.getElementById('f-archivo').files = e.dataTransfer.files;
+    document.getElementById('drop-label').innerHTML = '✓ ' + file.name + '<br><span style="font-size:0.75rem;opacity:0.6;">Haz clic para cambiar</span>';
+    document.getElementById('dropzone').style.borderColor = 'var(--orange)';
+  }
+}
+function submitForm() {
+  const nombre = document.getElementById('f-nombre').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const desc = document.getElementById('f-descripcion').value.trim();
+  const errEl = document.getElementById('form-error');
+  errEl.style.display = 'none';
+  if (!nombre) { errEl.textContent = 'Por favor escribe tu nombre.'; errEl.style.display = 'block'; return; }
+  if (!email || !email.includes('@')) { errEl.textContent = 'Introduce un email válido.'; errEl.style.display = 'block'; return; }
+  if (!desc) { errEl.textContent = 'Cuéntanos qué necesitas imprimir.'; errEl.style.display = 'block'; return; }
+  const uso = document.getElementById('f-uso').value;
+  const unidades = document.getElementById('f-unidades').value;
+  const diseno = document.getElementById('f-diseno').value;
+  const plazo = document.getElementById('f-plazo').value;
+  const tel = document.getElementById('f-telefono').value.trim();
+  const waMsg = encodeURIComponent('Nueva solicitud de presupuesto\n\nNombre: ' + nombre + '\nEmail: ' + email + (tel ? '\nTeléfono: ' + tel : '') + '\nUso: ' + (uso||'—') + '\nUnidades: ' + (unidades||'—') + '\nDiseño: ' + (diseno||'—') + '\nPlazo: ' + (plazo||'Sin prisa') + '\n\nProyecto:\n' + desc);
+  window.open('https://wa.me/34XXXXXXXXX?text=' + waMsg, '_blank');
+  document.getElementById('form-fields').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+}
+</script>
+</body>
+</html>
